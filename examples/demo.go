@@ -10,7 +10,7 @@ import (
 func main() {
 	lang := i18n.NewI18n(
 		// 这里指定语言文件路径
-		i18n.LangDirectory("/Users/mac/go/src/github.com/gohouse/i18n/examples/language"),
+		i18n.LangDirectory("/Users/bob/Desktop/project/i18n/examples/language"),
 
 		// 这里如果不i设置, 则默认使用zh_cn
 		//i18n.DefaultLang("zh_cn"),
@@ -22,7 +22,16 @@ func main() {
 	// 加载error.json文件内的具体配置项, 多级加载, 使用.连接
 	test := lang.Load("test")
 	test2 := lang.Load("err2.bb.cc")
-
+	fmt.Println(test)
+	fmt.Println(test2)
+	lang.Lang("en_us")
+	test = lang.Load("test")
+	test2 = lang.Load("err2.bb.cc")
+	fmt.Println(test)
+	fmt.Println(test2)
+	lang.Lang("zh_tw")
+	test = lang.Load("test")
+	test2 = lang.Load("err2.bb.cc")
 	fmt.Println(test)
 	fmt.Println(test2)
 }

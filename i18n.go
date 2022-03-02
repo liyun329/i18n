@@ -102,6 +102,11 @@ func (i *I18n) LoadWithDefault(key string, defaultVal ...string) interface{} {
 	return parser.LoadWithDefault(key, defaultVal...)
 }
 
+// Lang 修改语言
+func (i *I18n) Lang(l string) {
+	i.opts.DefaultLang = l
+}
+
 // LangDirectory 存放不同语言的目录
 func LangDirectory(ld string) Option {
 	return func(o *Options) {
