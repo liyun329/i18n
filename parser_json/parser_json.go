@@ -2,8 +2,9 @@ package parser_json
 
 import (
 	"encoding/json"
-	"github.com/gohouse/e"
-	"github.com/gohouse/i18n"
+	"fmt"
+
+	"github.com/liyun329/i18n"
 	"io/ioutil"
 	"log"
 	"os"
@@ -39,13 +40,13 @@ func (pj *ParserJson) SetOptions(opts *i18n.Options) {
 }
 
 // Parse 执行解析
-func (pj *ParserJson) Parse() e.Error {
+func (pj *ParserJson) Parse() error {
 	// 获取lang目录的所有文件并解析
 	var s []string
 	// 递归获取lang目录下的所有文件, 返回完整的文件路径数组
 	fileAll, err := GetAllFile(pj.opts.LangDirectory, s)
 	if err != nil {
-		return e.New(err.Error())
+		return err
 	}
 
 	// 去掉目录前缀, 获取语言和文件
@@ -59,7 +60,7 @@ func (pj *ParserJson) Parse() e.Error {
 		// 解析语言和文件名
 		split := strings.Split(fileSuf, "/")
 		if len(split) != 2 {
-			return e.New("目录格式错误")
+			return fmt.Errorf("目录格式错误")
 		}
 		// 截取文件名作为一个key, 去掉后缀名
 		fileNameStr := strings.TrimRight(split[1], ".json")
@@ -67,14 +68,14 @@ func (pj *ParserJson) Parse() e.Error {
 		// 读取文件内容为 []byte
 		bytes, err := pj.ReadBytesFromFile(item)
 		if err != nil {
-			return e.New(err.Error())
+			return err
 		}
 
 		// 解析json为map
 		var js map[string]interface{}
 		err = json.Unmarshal([]byte(string(bytes)), &js)
 		if err != nil {
-			return e.New(err.Error())
+			return err
 		}
 
 		// 保存到 ParserJson.val 内存中

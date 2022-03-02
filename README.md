@@ -5,15 +5,15 @@ internationalization （国际化）简称：i18n，因为在i和n之间还有18
 ## 安装
 - go mod
 ```shell script
-require github.com/gohouse/i18n master
+require github.com/liyun329/i18n master
 ```
 - go get
 ```shell script
-go get github.com/gohouse/i18n
+go get github.com/liyun329/i18n
 ```
 
 ## 使用
-可以查看包内的示例代码: [https://github.com/gohouse/i18n/blob/master/examples/demo.go](https://github.com/gohouse/i18n/blob/master/examples/demo.go)  
+可以查看包内的示例代码: [https://github.com/liyun329/i18n/blob/master/examples/demo.go](https://github.com/liyun329/i18n/blob/master/examples/demo.go)  
 
 添加语言文件
 ```shell script
@@ -56,15 +56,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/gohouse/i18n"
+	"github.com/liyun329/i18n"
 	// 这里不要忘记引入默认的json驱动
-	_ "github.com/gohouse/i18n/parser_json"
+	_ "github.com/liyun329/i18n/parser_json"
 )
 
 func main() {
 	lang := i18n.NewI18n(
 		// 这里指定语言文件路径
-		i18n.LangDirectory("/go/src/github.com/gohouse/i18n/examples/language"),
+		i18n.LangDirectory("/go/src/github.com/liyun329/i18n/examples/language"),
 
 		// 这里如果不i设置, 则默认使用zh_cn
 		//i18n.DefaultLang("zh_cn"),

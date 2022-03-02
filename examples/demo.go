@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/gohouse/i18n"
+	"github.com/liyun329/i18n"
 	// 这里不要忘记引入驱动,如引入默认的json驱动
-	_ "github.com/gohouse/i18n/parser_json"
+	_ "github.com/liyun329/i18n/parser_json"
 )
 
 func main() {

@@ -1,6 +1,6 @@
 package parser_json
 
-import "github.com/gohouse/i18n"
+import "github.com/liyun329/i18n"
 
 const PARSER = "json"
 

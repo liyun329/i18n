@@ -1,7 +1,8 @@
 package i18n
 
 import (
-	"github.com/gohouse/e"
+	"fmt"
+
 	"sync"
 )
 
@@ -38,7 +39,7 @@ func NewI18n(opt ...Option) *I18n {
 	// 初始化解析器
 	err := i18nInit.initParser()
 	if err != nil {
-		panic(err.ErrorWithStack())
+		panic(err)
 	}
 
 	return i18nInit
@@ -50,7 +51,7 @@ func (i *I18n) initOption(opt ...Option) {
 	}
 }
 
-func (i *I18n) initParser() e.Error {
+func (i *I18n) initParser() error {
 	// 检查是否设置了解析器, 如果没有, 则默认使用json解析器
 	if i.opts.DefaultParser == "" {
 		i.initOption(DefaultParser("json"))
@@ -64,7 +65,7 @@ func (i *I18n) initParser() e.Error {
 
 	var parser = i.parser.Getter(i.opts.DefaultParser)
 	if parser == nil {
-		return e.New("未注册解析器")
+		return fmt.Errorf("未注册解析器")
 	}
 
 	// 传入配置
@@ -77,7 +78,7 @@ func (i *I18n) initParser() e.Error {
 func (i *I18n) Load(keys ...string) interface{} {
 	var parser = i.parser.Getter(i.opts.DefaultParser)
 	if parser == nil {
-		panic(e.New("未注册的解析器").ErrorWithStack())
+		panic(fmt.Errorf("未注册的解析器"))
 	}
 
 	//// 传入配置
@@ -91,7 +92,7 @@ func (i *I18n) Load(keys ...string) interface{} {
 func (i *I18n) LoadWithDefault(key string, defaultVal ...string) interface{} {
 	var parser = i.parser.Getter(i.opts.DefaultParser)
 	if parser == nil {
-		panic(e.New("未注册的解析器").ErrorWithStack())
+		panic(fmt.Errorf("未注册的解析器"))
 	}
 
 	//// 传入配置
