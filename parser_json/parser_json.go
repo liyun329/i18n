@@ -172,6 +172,35 @@ func (pj *ParserJson) Load(keys ...string) interface{} {
 	return currentVal
 }
 
+func (pj *ParserJson) LoadByLang(key, lang string) string {
+	if key == "" {
+		return ""
+	}
+	if lang == "" {
+		lang = pj.opts.DefaultLang
+	}
+	split := []string{key}
+	// 如果key包含了点,则为多级调用
+	if strings.Contains(key, ".") {
+		split = strings.Split(key, ".")
+	}
+	// 取指定语言的配置
+	var currentVal interface{} = pj.val[StringToKey(lang)]
+	for _, item := range split {
+		if v, ok := currentVal.(map[string]interface{}); ok {
+			if v2, ok2 := v[item]; ok2 {
+				currentVal = v2
+			} else {
+				currentVal = nil
+			}
+		} else {
+			currentVal = nil
+		}
+	}
+
+	return fmt.Sprintf("%v", currentVal)
+}
+
 // GetAllFile 递归读取制定目录下的所有文件, 返回完整文件路径数组
 func GetAllFile(dirname string, s []string) ([]string, error) {
 	rd, err := ioutil.ReadDir(dirname)

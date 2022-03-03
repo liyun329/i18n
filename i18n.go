@@ -89,6 +89,20 @@ func (i *I18n) Load(keys ...string) interface{} {
 	return parser.Load(keys...)
 }
 
+func (i *I18n) LoadByLang(key, lang string) string {
+	var parser = i.parser.Getter(i.opts.DefaultParser)
+	if parser == nil {
+		panic(fmt.Errorf("未注册的解析器"))
+	}
+
+	//// 传入配置
+	//parser.SetOptions(i.opts)
+	//// 解析内容
+	//err := parser.Parse()
+	//return err
+	return parser.LoadByLang(key, lang)
+}
+
 func (i *I18n) LoadWithDefault(key string, defaultVal ...string) interface{} {
 	var parser = i.parser.Getter(i.opts.DefaultParser)
 	if parser == nil {

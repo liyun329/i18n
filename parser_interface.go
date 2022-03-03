@@ -5,4 +5,5 @@ type IParser interface {
 	Parse() error
 	LoadWithDefault(key string, defaultVal ...string) interface{}
 	Load(keys ...string) interface{}
+	LoadByLang(key, lang string) string
 }
